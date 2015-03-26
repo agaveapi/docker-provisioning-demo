@@ -1,0 +1,230 @@
+{
+    "name": "%USERNAME-vina-sxsw",
+    "parallelism": "parallel",
+    "version": "1.1.2",
+    "helpURI": "http://vina.scripps.edu//",
+    "label": "Autodock Vina for SXSW",
+    "shortDescription": "AutoDock Vina is an open-source program for doing molecular docking",
+    "longDescription": "",
+    "author": "John Fonner",
+    "tags": [
+        "drug",
+        "docking",
+        "vina",
+        "sxsw"
+    ],
+    "executionSystem": "stampede-sxsw15-%USERNAME",
+    "executionType": "HPC",
+    "deploymentPath": "jfonner/applications/vina/1.1.2/sxsw",
+    "deploymentSystem": "data.iplantcollaborative.org",
+    "templatePath": "vinasxsw.sh",
+    "testPath": "test/test.sh",
+    "checkpointable": false,
+    "modules": [
+        "purge",
+        "load TACC",
+        "load irods",
+        "load boost",
+        "load autodock_vina/1.1.2"
+    ],
+    "inputs": [
+        {
+            "id": "proteinFile",
+            "value": {
+                "default": "jfonner/applications/vina/1.1.2/sxsw/test/2FOM.pdbqt",
+                "required": true,
+                "visible": true
+            },
+            "details": {
+                "label": "Select your receptor protein",
+                "description": ""
+            },
+            "semantics": {
+                "minCardinality": 1,
+                "maxCardinality": 1,
+                "fileTypes": [
+                    "pdb-0",
+                    "pdbqt-0"
+                ]
+            }
+        },
+        {
+            "id": "ligandFiles",
+            "value": {
+                "default": [ "jfonner/applications/vina/1.1.2/sxsw/test/ZINC00000567.pdbqt", "jfonner/applications/vina/1.1.2/sxsw/test/ZINC00000707.pdbqt" ],
+                "required": false,
+                "visible": true
+            },
+            "details": {
+                "label": "Select your ligand files",
+                "description": "Every file will be independently docked, and scores will be returned"
+            },
+            "semantics": {
+                "minCardinality": 1,
+                "maxCardinality": -1,
+                "fileTypes": [
+                    "pdbqt-0"
+                ]
+            }
+        }
+    ],
+    "parameters": [
+        {
+            "id": "centerX",
+            "value": {
+                "default": -0.081,
+                "type": "number",
+                "validator": "",
+                "visible": true,
+                "required": true
+            },
+            "details": {
+                "label": "Center X",
+                "description": "The x-coordinate of the center of the active site"
+            },
+            "semantics": {
+                "ontology": [
+                    "xs:decimal"
+                ]
+            }
+        },
+        {
+            "id": "centerY",
+            "value": {
+                "default": 2.213,
+                "type": "number",
+                "visible": true,
+                "validator": "",
+                "required": true
+            },
+            "details": {
+                "label": "Center Y",
+                "description": "The y-coordinate of the center of the active site"
+            },
+            "semantics": {
+                "ontology": [
+                    "xs:decimal"
+                ]
+            }
+        },
+        {
+            "id": "centerZ",
+            "value": {
+                "default": -4.090,
+                "type": "number",
+                "validator": "",
+                "visible": true,
+                "required": true
+            },
+            "details": {
+                "label": "Center Z",
+                "description": "The z-coordinate of the center of the active site"
+            },
+            "semantics": {
+                "ontology": [
+                    "xs:decimal"
+                ]
+            }
+        },
+        {
+            "id": "sizeX",
+            "value": {
+                "default": 22,
+                "type": "number",
+                "validator": "",
+                "visible": true,
+                "required": true
+            },
+            "details": {
+                "label": "Size X",
+                "description": "The size of the search space in the x dimension"
+            },
+            "semantics": {
+                "ontology": [
+                    "xs:decimal"
+                ]
+            }
+        },
+        {
+            "id": "sizeY",
+            "value": {
+                "default": 22,
+                "type": "number",
+                "validator": "",
+                "visible": true,
+                "required": true
+            },
+            "details": {
+                "label": "Size Y",
+                "description": "The size of the search space in the y dimension"
+            },
+            "semantics": {
+                "ontology": [
+                    "xs:decimal"
+                ]
+            }
+        },
+        {
+            "id": "sizeZ",
+            "value": {
+                "default": 22,
+                "type": "number",
+                "validator": "",
+                "visible": true,
+                "required": true
+            },
+            "details": {
+                "label": "Size Z",
+                "description": "The size of the search space in the z dimension"
+            },
+            "semantics": {
+                "ontology": [
+                    "xs:decimal"
+                ]
+            }
+        },
+        {
+            "id": "paramFile",
+            "value": {
+                "default": "/scratch/01114/jfonner/DockingPortal/TestSet/paramlist",
+                "type": "string",
+                "validator": "",
+                "visible": true,
+                "required": false
+            },
+            "details": {
+                "label": "The path of the \"paramlist\" file to use",
+                "description": "These paramlist files are generated by the \"paramgen.sh\" script and exist for a number of libraries hosted at TACC. You can alternately use \"ligandFiles\" to specify ligands."
+            },
+            "semantics": {
+                "ontology": [
+                    "xs:string"
+                ],
+                "minCardinality": 1,
+                "maxCardinality": 1
+            }
+        },
+        {
+            "id": "ligandIndices",
+            "value": {
+                "default": -1,
+                "type": "number",
+                "validator": "",
+                "visible": true,
+                "required": false
+            },
+            "details": {
+                "label": "Optional: if using \"paramFile\", screen only a subset of ligands",
+                "description": "The first ligand counts from 1 (not 0). A \"-1\" (default) means use all ligands. This only applies to the \"paramFile\""
+            },
+            "semantics": {
+                "ontology": [
+                    "xs:decimal"
+                ],
+                "minCardinality":1,
+                "maxCardinality":2
+            }
+        }
+    ],
+    "outputs": []
+}

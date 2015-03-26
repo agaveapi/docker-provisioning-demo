@@ -1,0 +1,46 @@
+{
+  "name":"%USERNAME-vina-sxsw test-%DATESTAMP",
+  "appId": "%USERNAME-vina-sxsw-1.1.2",
+  "batchQueue": "normal",
+  "executionSystem": "stampede-sxsw15-%USERNAME",
+  "maxRunTime": "01:00:00",
+  "memoryPerNode": "1GB",
+  "nodeCount": 1,
+  "processorsPerNode": 1,
+  "archive": false,
+  "archiveSystem": "data.iplantcollaborative.org",
+  "archivePath": null,
+  "inputs": {
+    "proteinFile": "jfonner/applications/vina/1.1.2/sxsw/test/2FOM.pdbqt",
+    "ligandFiles": [
+      "jfonner/applications/vina/1.1.2/sxsw/test/ZINC00000567.pdbqt",
+      "jfonner/applications/vina/1.1.2/sxsw/test/ZINC00000707.pdbqt"
+    ]
+  },
+  "parameters": {
+    "centerX": -0.081,
+    "sizeX": 22,
+    "centerY": 2.213,
+    "sizeY": 22,
+    "ligandIndices": -1,
+    "centerZ": -4.09,
+    "sizeZ": 22
+  },
+  "notifications": [
+    {
+      "url":"http://requestbin.agaveapi.co/18g2dws1?job_id=${JOB_ID}&status=${JOB_STATUS}",
+      "event":"*",
+      "persistent":true
+    },
+    {
+      "url":"dooley@tacc.utexas.edu",
+      "event":"FINISHED",
+      "persistent":false
+    },
+    {
+      "url":"dooley@tacc.utexas.edu",
+      "event":"FAILED",
+      "persistent":false
+    }
+  ]
+}
