@@ -142,46 +142,44 @@ Agave provides a common interface for you to run scientific codes on many differ
   ```
 
 3. Specify your image, inputs, parameters, etc
-
-```javascript
-{
-    "name": "docker r demo",
-    "appId": "cloud-runner-0.1.0u3",
-    "batchQueue": "debug",
-    "executionSystem": "docker.iplantcollaborative.org",
-    "maxRunTime": "01:00:00",
-    "memoryPerNode": "1GB",
-    "nodeCount": 1,
-    "processorsPerNode": 1,
-    "archive": false,
-    "inputs": {
-      "appBundle": "agave://data.iplantcollaborative.org/dooley/inputs/r-demo/r-demo.tgz"
-    },
-    "parameters": {
-      "command": "Rscript",
-      "commandArgs": "main.r",
-      "dockerImage": "scivm/r-project-3.0",
-      "unpackInputs": true
-    },
-    "notifications": [
-      {
-        "url":"$EMAIL_ADDRESS",
-        "event":"FINISHED",
-        "persistent":false
+  ```javascript
+  {
+      "name": "docker r demo",
+      "appId": "cloud-runner-0.1.0u3",
+      "batchQueue": "debug",
+      "executionSystem": "docker.iplantcollaborative.org",
+      "maxRunTime": "01:00:00",
+      "memoryPerNode": "1GB",
+      "nodeCount": 1,
+      "processorsPerNode": 1,
+      "archive": false,
+      "inputs": {
+        "appBundle": "agave://data.iplantcollaborative.org/dooley/inputs/r-demo/r-demo.tgz"
       },
-      {
-        "url":"$EMAIL_ADDRESS",
-        "event":"FAILED",
-        "persistent":false
+      "parameters": {
+        "command": "Rscript",
+        "commandArgs": "main.r",
+        "dockerImage": "scivm/r-project-3.0",
+        "unpackInputs": true
       },
-      {  "url":"http://requestbin.agaveapi.co/1cl87yo1?job=${JOB_ID}&event=${EVENT}",
-      "event":"*",
-      "persistent":true
-      }
-    ]
-}
-
-```
+      "notifications": [
+        {
+          "url":"$EMAIL_ADDRESS",
+          "event":"FINISHED",
+          "persistent":false
+        },
+        {
+          "url":"$EMAIL_ADDRESS",
+          "event":"FAILED",
+          "persistent":false
+        },
+        {  "url":"http://requestbin.agaveapi.co/1cl87yo1?job=${JOB_ID}&event=${EVENT}",
+        "event":"*",
+        "persistent":true
+        }
+      ]
+  }
+  ```
 
 4. Run the job. This time it will run inside a container of the image you specified in the job request
   ```bash
